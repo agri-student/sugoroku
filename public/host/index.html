@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>双六クイズ｜ホスト画面</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎲 双六クイズ <span class="sub">ホスト画面</span></h1>
+    <div class="status-pill" id="statusPill">待機中</div>
+    <div class="controls">
+      <button id="startBtn" class="btn btn-primary">ゲーム開始</button>
+      <button id="nextBtn" class="btn">手番を進める</button>
+      <button id="resetBtn" class="btn btn-ghost">リセット</button>
+      <button id="adminToggle" class="btn btn-ghost">クイズ管理</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- 盤面 -->
+    <section class="board-panel">
+      <div class="turn-banner" id="turnBanner">参加を待っています…</div>
+      <div id="board" class="board"></div>
+    </section>
+
+    <!-- サイド: ランキング / クイズ -->
+    <aside class="side-panel">
+      <div class="card">
+        <h2>ランキング</h2>
+        <ol id="ranking" class="ranking"></ol>
+      </div>
+
+      <div class="card quiz-card" id="quizCard" hidden>
+        <h2>クイズ出題中</h2>
+        <p class="quiz-question" id="quizQuestion"></p>
+        <ul class="quiz-choices" id="quizChoices"></ul>
+        <div class="timer-wrap">
+          <div class="timer-bar" id="timerBar"></div>
+          <span class="timer-text" id="timerText"></span>
+        </div>
+        <div class="answer-status" id="answerStatus"></div>
+      </div>
+
+      <div class="card result-card" id="resultCard" hidden>
+        <h2>結果発表</h2>
+        <div id="resultBody"></div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- クイズ管理パネル -->
+  <div class="admin-overlay" id="adminOverlay" hidden>
+    <div class="admin-modal">
+      <div class="admin-head">
+        <h2>クイズ管理（当日追加登録）</h2>
+        <button class="btn btn-ghost" id="adminClose">閉じる</button>
+      </div>
+      <form id="quizForm" class="quiz-form">
+        <label>問題文
+          <textarea id="qQuestion" rows="2" required placeholder="例）光合成で植物が取り込む気体は？"></textarea>
+        </label>
+        <div class="choices-grid" id="choicesGrid">
+          <label>選択肢1 <input type="text" data-choice required /></label>
+          <label>選択肢2 <input type="text" data-choice required /></label>
+          <label>選択肢3 <input type="text" data-choice /></label>
+          <label>選択肢4 <input type="text" data-choice /></label>
+        </div>
+        <div class="form-row">
+          <label>正解の選択肢
+            <select id="qAnswer">
+              <option value="0">選択肢1</option>
+              <option value="1">選択肢2</option>
+              <option value="2">選択肢3</option>
+              <option value="3">選択肢4</option>
+            </select>
+          </label>
+          <label>制限時間（秒）
+            <input type="number" id="qTime" min="5" max="60" value="20" />
+          </label>
+          <button type="submit" class="btn btn-primary">追加登録</button>
+        </div>
+        <p class="form-msg" id="formMsg"></p>
+      </form>
+
+      <h3>登録済みクイズ（<span id="quizCount">0</span>問）</h3>
+      <ul class="quiz-list" id="quizList"></ul>
+    </div>
+  </div>
+
+  <!-- サイコロ演出 -->
+  <div class="dice-overlay" id="diceOverlay" hidden>
+    <div class="dice-box">
+      <div class="dice-face" id="diceFace">🎲</div>
+      <div class="dice-caption" id="diceCaption"></div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

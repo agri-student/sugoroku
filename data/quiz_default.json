@@ -1,0 +1,58 @@
+[
+  {
+    "id": "q1",
+    "question": "光合成で植物が主に取り込む気体はどれ？",
+    "choices": ["酸素", "二酸化炭素", "窒素", "水素"],
+    "answerIndex": 1,
+    "timeLimitSec": 20
+  },
+  {
+    "id": "q2",
+    "question": "日本の首都はどこ？",
+    "choices": ["大阪", "京都", "東京", "名古屋"],
+    "answerIndex": 2,
+    "timeLimitSec": 15
+  },
+  {
+    "id": "q3",
+    "question": "三角形の内角の和は何度？",
+    "choices": ["90度", "180度", "270度", "360度"],
+    "answerIndex": 1,
+    "timeLimitSec": 20
+  },
+  {
+    "id": "q4",
+    "question": "水が氷になるのは何度以下？",
+    "choices": ["0度", "10度", "-10度", "100度"],
+    "answerIndex": 0,
+    "timeLimitSec": 15
+  },
+  {
+    "id": "q5",
+    "question": "英語で「ありがとう」はどれ？",
+    "choices": ["Hello", "Sorry", "Thank you", "Goodbye"],
+    "answerIndex": 2,
+    "timeLimitSec": 15
+  },
+  {
+    "id": "q6",
+    "question": "1年は何日？（うるう年でない年）",
+    "choices": ["360日", "365日", "366日", "354日"],
+    "answerIndex": 1,
+    "timeLimitSec": 20
+  },
+  {
+    "id": "q7",
+    "question": "太陽系で最も大きい惑星は？",
+    "choices": ["地球", "土星", "木星", "火星"],
+    "answerIndex": 2,
+    "timeLimitSec": 20
+  },
+  {
+    "id": "q8",
+    "question": "「春はあけぼの」で始まる古典作品は？",
+    "choices": ["源氏物語", "枕草子", "徒然草", "方丈記"],
+    "answerIndex": 1,
+    "timeLimitSec": 25
+  }
+]

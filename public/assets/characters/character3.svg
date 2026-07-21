@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <circle cx="60" cy="60" r="52" fill="#FFD93D"/>
+  <circle cx="50" cy="54" r="6" fill="#333"/>
+  <circle cx="70" cy="54" r="6" fill="#333"/>
+  <path d="M52 66 L68 66 L60 78 Z" fill="#FF8C42"/>
+  <path d="M60 8 Q56 2 64 4 Q60 8 60 12" fill="#FF8C42"/>
+  <path d="M20 70 Q28 74 22 80" stroke="#e6b800" stroke-width="4" fill="none"/>
+  <path d="M100 70 Q92 74 98 80" stroke="#e6b800" stroke-width="4" fill="none"/>
+  <text x="60" y="114" font-size="12" text-anchor="middle" fill="#7a5c00" font-family="sans-serif">ヒヨコ</text>
+</svg>

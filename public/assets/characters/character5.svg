@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <path d="M30 50 Q60 10 90 50 L90 78 Q78 66 72 82 Q66 68 60 84 Q54 68 48 82 Q42 66 30 78 Z" fill="#A66DD4"/>
+  <circle cx="50" cy="52" r="6" fill="#fff"/>
+  <circle cx="70" cy="52" r="6" fill="#fff"/>
+  <circle cx="50" cy="53" r="3" fill="#333"/>
+  <circle cx="70" cy="53" r="3" fill="#333"/>
+  <path d="M54 66 Q60 72 66 66" stroke="#5e2b8a" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text x="60" y="112" font-size="12" text-anchor="middle" fill="#fff" font-family="sans-serif">タコ</text>
+</svg>

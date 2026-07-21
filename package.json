@@ -1,0 +1,21 @@
+{
+  "name": "sugoroku-quiz",
+  "version": "1.0.0",
+  "description": "授業の振り返り用 双六クイズゲーム（Node.js + Express + Socket.io）",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": [
+    "sugoroku",
+    "quiz",
+    "socket.io",
+    "education"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
+}

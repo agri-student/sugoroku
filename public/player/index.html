@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>双六クイズ｜プレイヤー</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- 1) 班選択 -->
+    <section class="screen" id="screenJoin">
+      <h1>🎲 双六クイズ</h1>
+      <p class="lead">あなたの班をえらんでください</p>
+      <div class="team-grid" id="teamGrid"></div>
+      <p class="err-msg" id="joinErr"></p>
+    </section>
+
+    <!-- 2) キャラクター選択 -->
+    <section class="screen" id="screenCharacter" hidden>
+      <h1 id="charTitle">キャラクターをえらぼう</h1>
+      <div class="char-grid" id="charGrid"></div>
+      <button class="btn btn-primary big" id="charConfirm" disabled>これにする</button>
+    </section>
+
+    <!-- 3) ゲーム画面 -->
+    <section class="screen game" id="screenGame" hidden>
+      <header class="pheader">
+        <div class="me">
+          <span class="avatar" id="meAvatar"></span>
+          <div>
+            <div class="mename" id="meName">-</div>
+            <div class="mepts"><span id="mePts">0</span> pt</div>
+          </div>
+        </div>
+        <div class="pos-info">位置 <b id="mePos">0</b></div>
+      </header>
+
+      <div class="turn-info" id="turnInfo">-</div>
+
+      <!-- サイコロ -->
+      <div class="panel" id="dicePanel">
+        <button class="dice-btn" id="rollBtn" disabled>🎲<span>サイコロを振る</span></button>
+        <div class="dice-result" id="diceResult"></div>
+      </div>
+
+      <!-- クイズ -->
+      <div class="panel quiz" id="quizPanel" hidden>
+        <div class="q-timer" id="qTimer">残り -</div>
+        <p class="q-question" id="qQuestion"></p>
+        <div class="q-choices" id="qChoices"></div>
+        <div class="q-feedback" id="qFeedback"></div>
+      </div>
+
+      <!-- 結果/終了 -->
+      <div class="panel result" id="resultPanel" hidden></div>
+    </section>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
