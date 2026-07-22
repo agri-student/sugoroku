@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <circle cx="60" cy="60" r="56" fill="#ffd54f"/>
-  <circle cx="60" cy="60" r="56" fill="none" stroke="#ffffff" stroke-width="4"/>
-  <text x="60" y="74" font-size="58" text-anchor="middle">🐔</text>
-  <text x="60" y="112" font-size="13" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold">にわとり</text>
-</svg>
