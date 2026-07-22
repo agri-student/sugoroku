@@ -13,7 +13,9 @@
 
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 const http = require('http');
+const { execFile } = require('child_process');
 const express = require('express');
 const { Server } = require('socket.io');
 const rules = require('./game/rules');
@@ -505,13 +507,54 @@ function handleAddQuiz(socket, payload) {
 }
 
 // ------------------------------------------------------------------
+// 起動補助: LAN内IPアドレスの取得とブラウザ自動オープン
+// ------------------------------------------------------------------
+// 同一Wi-Fiのタブレットからアクセスする際に使う、PCのLAN内IPv4アドレスを列挙する。
+function getLanAddresses() {
+  const nets = os.networkInterfaces();
+  const addrs = [];
+  for (const name of Object.keys(nets)) {
+    for (const net of nets[name] || []) {
+      if (net.family === 'IPv4' && !net.internal) addrs.push(net.address);
+    }
+  }
+  return addrs;
+}
+
+// 既定ブラウザでURLを開く（AUTO_OPEN=1 のときのみ）。失敗しても無視する。
+function openBrowser(url) {
+  if (process.env.AUTO_OPEN !== '1') return;
+  const platform = process.platform;
+  try {
+    if (platform === 'darwin') execFile('open', [url]);
+    else if (platform === 'win32') execFile('cmd', ['/c', 'start', '', url]);
+    else execFile('xdg-open', [url], () => {}); // Linux（無ければ黙って失敗）
+  } catch (_e) {
+    /* ブラウザ自動起動は必須ではないので握りつぶす */
+  }
+}
+
+// ------------------------------------------------------------------
 // 起動
 // ------------------------------------------------------------------
 server.listen(PORT, () => {
+  const lan = getLanAddresses();
   console.log('==================================================');
-  console.log('  双六クイズゲーム サーバー起動');
-  console.log(`  ホスト画面   : http://localhost:${PORT}/host`);
-  console.log(`  プレイヤー   : http://localhost:${PORT}/player`);
-  console.log(`  （タブレットは http://<PCのIP>:${PORT}/player へ）`);
+  console.log('  🎲 双六クイズゲーム サーバー起動');
+  console.log('--------------------------------------------------');
+  console.log('  ▼ この画面をプロジェクターに（教員PC）');
+  console.log(`    ホスト画面 : http://localhost:${PORT}/host`);
+  console.log('');
+  console.log('  ▼ タブレットのブラウザでこのURLを開く（同じWi-Fi）');
+  if (lan.length > 0) {
+    lan.forEach((ip) => console.log(`    プレイヤー : http://${ip}:${PORT}/player`));
+  } else {
+    console.log(`    プレイヤー : http://<このPCのIPアドレス>:${PORT}/player`);
+  }
   console.log('==================================================');
+  console.log('  終了するには、この画面で Ctrl + C を押してください。');
+  console.log('');
+
+  // ワンクリック起動時（AUTO_OPEN=1）は自動でホスト画面を開く
+  openBrowser(`http://localhost:${PORT}/host`);
 });

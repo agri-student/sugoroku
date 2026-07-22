@@ -6,7 +6,23 @@
 - 技術: Node.js + Express + Socket.io（フロントは素の HTML/CSS/JS）
 - 要件定義書: `sugoroku-quiz-game.md` に準拠
 
-## セットアップ
+## かんたん起動（ワンクリック）
+
+初回だけ Node.js（https://nodejs.org のLTS版）をインストールすれば、あとは起動ファイルをダブルクリックするだけです。
+
+- **Windows**: `start.bat` をダブルクリック
+- **macOS / Linux**: `start.command` をダブルクリック
+  - macOSで「開けません」と出る場合は右クリック →「開く」を一度だけ選択してください。
+
+ダブルクリックすると、サーバーが起動して**自動的にホスト画面がブラウザで開き**、
+ターミナルに**タブレット用のURL（このPCのLAN内IPアドレス入り）**が表示されます。
+そのURLを各タブレットのブラウザで開けば参加できます。終了はその画面で `Ctrl + C`。
+
+> なぜ「起動」が要るの？ → このゲームは複数端末（教員PC＋各班のタブレット）が
+> リアルタイムに通信するため、中継役のサーバーが必要です。起動ファイルは、
+> その起動をダブルクリック1回に短縮するものです（校内LANのみでオフライン動作）。
+
+## 手動セットアップ（開発者向け）
 
 ```bash
 npm install
@@ -17,6 +33,7 @@ npm start        # http://localhost:3000
 - プレイヤー画面（タブレット）: `http://<教員PCのIP>:3000/player`
 
 `PORT` 環境変数でポート変更可能（例: `PORT=8080 npm start`）。
+`AUTO_OPEN=1` を付けると起動時にホスト画面を自動で開きます（起動ファイルはこれを利用）。
 
 ## 遊び方
 
@@ -43,6 +60,8 @@ npm start        # http://localhost:3000
 
 ```
 sugoroku/
+├── start.command             # ワンクリック起動（macOS / Linux）
+├── start.bat                 # ワンクリック起動（Windows）
 ├── server.js                 # Express + Socket.io サーバー（状態管理・進行）
 ├── game/
 │   └── rules.js              # 第9章の未確定項目＝「仮ルール」を集約（差し替え容易）
