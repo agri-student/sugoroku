@@ -1,0 +1,8 @@
+# Windows バッチファイルは必ず CRLF 改行で保存する（バイトをそのまま保持）。
+# LF 改行だと Windows の cmd がバッチを正しく解釈できず起動に失敗するため、
+# -text（変換なし）にして、ZIP ダウンロード・git チェックアウトの両方で CRLF を保証する。
+*.bat -text
+
+# シェルスクリプト系は必ず LF 改行（CRLF だと実行に失敗する）。
+*.command text eol=lf
+*.sh      text eol=lf
