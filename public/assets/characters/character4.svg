@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <ellipse cx="60" cy="66" rx="50" ry="42" fill="#6BCB77"/>
-  <path d="M20 66 Q60 30 100 66" fill="#3f9e57"/>
-  <path d="M35 50 h50 M30 66 h60 M35 82 h50" stroke="#2e7d43" stroke-width="3"/>
-  <circle cx="50" cy="60" r="5" fill="#333"/>
-  <circle cx="70" cy="60" r="5" fill="#333"/>
-  <path d="M52 74 Q60 80 68 74" stroke="#2e7d43" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <text x="60" y="114" font-size="12" text-anchor="middle" fill="#256b38" font-family="sans-serif">カメ</text>
+  <circle cx="60" cy="60" r="56" fill="#aed581"/>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <text x="60" y="74" font-size="58" text-anchor="middle">🐑</text>
+  <text x="60" y="112" font-size="13" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold">ひつじ</text>
 </svg>

@@ -1,13 +1,20 @@
 :root {
-  --bg: #0f1226;
-  --panel: #1a1f3c;
-  --panel2: #232a52;
-  --accent: #ffd93d;
-  --accent2: #4d96ff;
-  --good: #6bcb77;
-  --bad: #ff6b6b;
-  --text: #eef1ff;
-  --muted: #9aa3d0;
+  /* 農業テーマ パレット */
+  --sky1: #bfe8ff;
+  --sky2: #e8f8ec;
+  --field: #7cb342;
+  --field-dark: #558b2f;
+  --soil: #8d6e63;
+  --soil-dark: #5d4037;
+  --wheat: #f6c445;
+  --wheat-dark: #e0a91b;
+  --barn: #c0392b;
+  --cream: #fff8e7;
+  --cream2: #fdeecb;
+  --ink: #33401f;
+  --muted: #6b7a4f;
+  --good: #43a047;
+  --bad: #e2683f;
   --team1: #ff6b6b;
   --team2: #4ecdc4;
   --team3: #ffd93d;
@@ -19,49 +26,76 @@
 * { box-sizing: border-box; }
 body {
   margin: 0;
-  font-family: "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif;
-  background: radial-gradient(circle at 20% 0%, #1a1f3c, var(--bg));
-  color: var(--text);
+  font-family: "Hiragino Maru Gothic ProN", "Rounded Mplus 1c", "Hiragino Kaku Gothic ProN", "Meiryo", system-ui, sans-serif;
+  color: var(--ink);
   min-height: 100vh;
+  /* 空 → 農地のグラデーション背景 */
+  background:
+    radial-gradient(circle at 88% 60px, #fff2a8 0 34px, rgba(255,242,168,.5) 34px 52px, transparent 54px), /* 太陽 */
+    linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 30%, #cdeaa6 30%, #a5d572 100%);
+  background-attachment: fixed;
+}
+
+/* ふわふわの雲 */
+body::before {
+  content: "";
+  position: fixed;
+  top: 40px; left: 0; right: 0; height: 120px;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, #fff 70%, transparent) 12% 0/120px 46px no-repeat,
+    radial-gradient(closest-side, #fff 70%, transparent) 30% 30px/90px 34px no-repeat,
+    radial-gradient(closest-side, #fff 70%, transparent) 60% 10px/140px 50px no-repeat;
+  opacity: .85;
+  z-index: 0;
 }
 
 .topbar {
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   gap: 16px;
   padding: 14px 24px;
-  background: rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, var(--field) , var(--field-dark));
+  border-bottom: 6px solid var(--soil-dark);
+  color: #fff;
   flex-wrap: wrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
 }
-.topbar h1 { font-size: 24px; margin: 0; }
-.topbar .sub { font-size: 14px; color: var(--muted); font-weight: normal; }
+.topbar h1 { font-size: 24px; margin: 0; text-shadow: 0 2px 0 rgba(0,0,0,.2); }
+.topbar .sub { font-size: 14px; color: #eaffd5; font-weight: normal; }
 .status-pill {
   padding: 6px 14px;
   border-radius: 999px;
-  background: var(--panel2);
+  background: var(--wheat);
+  color: #5d4a00;
   font-size: 14px;
-  color: var(--accent);
+  font-weight: 800;
+  border: 2px solid var(--wheat-dark);
 }
 .controls { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; }
 
 .btn {
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   padding: 10px 16px;
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text);
-  background: var(--panel2);
+  font-weight: 800;
+  color: #4a3b12;
+  background: var(--cream);
   cursor: pointer;
+  border-bottom: 3px solid rgba(0,0,0,.15);
   transition: transform .08s, filter .15s;
 }
-.btn:hover { filter: brightness(1.15); }
-.btn:active { transform: scale(.96); }
-.btn-primary { background: linear-gradient(135deg, var(--accent2), #7a5cff); }
-.btn-ghost { background: transparent; border: 1px solid rgba(255,255,255,.2); }
+.btn:hover { filter: brightness(1.05); }
+.btn:active { transform: translateY(2px); border-bottom-width: 1px; }
+.btn-primary { background: linear-gradient(180deg, var(--wheat), var(--wheat-dark)); color: #4a3b00; }
+.btn-ghost { background: rgba(255,255,255,.75); }
 
 .layout {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 20px;
@@ -70,18 +104,28 @@ body {
 }
 @media (max-width: 1100px) { .layout { grid-template-columns: 1fr; } }
 
-.board-panel { background: var(--panel); border-radius: 18px; padding: 20px; }
+/* 盤面パネル = 農場 */
+.board-panel {
+  background:
+    linear-gradient(180deg, #bfe8ff 0 60px, #d7f0b6 60px 90px, #cdea9a 90px 100%);
+  border-radius: 20px;
+  padding: 20px;
+  border: 5px solid var(--soil-dark);
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.4), 0 8px 20px rgba(0,0,0,.18);
+}
 .turn-banner {
   text-align: center;
   font-size: 22px;
-  font-weight: 800;
+  font-weight: 900;
   padding: 10px;
   margin-bottom: 16px;
-  border-radius: 12px;
-  background: var(--panel2);
+  border-radius: 14px;
+  background: var(--cream);
+  color: var(--ink);
+  border: 3px dashed var(--field-dark);
 }
 
-/* 盤面 */
+/* 盤面 = 畑の区画 */
 .board {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -90,28 +134,48 @@ body {
 .cell {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  background: var(--panel2);
+  border-radius: 10px;
+  /* 畝（うね）模様の畑 */
+  background:
+    repeating-linear-gradient(90deg, #9ccc65 0 7px, #8bc34a 7px 14px);
+  border: 2px solid #6a9e34;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 4px;
-  font-size: 12px;
-  color: var(--muted);
+  padding: 3px;
   overflow: hidden;
+  box-shadow: inset 0 -6px 0 rgba(0,0,0,.06);
 }
-.cell.start { background: linear-gradient(135deg, #2e7d43, #6bcb77); color: #fff; }
-.cell.goal { background: linear-gradient(135deg, #b8860b, var(--accent)); color: #3a2c00; }
-.cell.quiz::after {
-  content: "?";
+.cell.start {
+  background: linear-gradient(160deg, #ffe08a, #ffb74d);
+  border-color: var(--wheat-dark);
+}
+.cell.goal {
+  background: linear-gradient(160deg, #ffd54f, #f6a821);
+  border-color: #b8860b;
+}
+/* マスの作物アイコン（大きく薄く） */
+.cell .crop {
   position: absolute;
-  right: 6px;
-  bottom: 4px;
-  font-size: 22px;
-  font-weight: 900;
-  color: rgba(255,255,255,.08);
+  right: 4px; bottom: 2px;
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,.2));
+  opacity: .9;
 }
-.cell .idx { font-weight: 700; }
+/* 番号は木の立て札風 */
+.cell .idx {
+  font-weight: 900;
+  font-size: 12px;
+  color: #fff;
+  background: var(--soil-dark);
+  padding: 1px 6px;
+  border-radius: 6px;
+  box-shadow: 0 1px 0 rgba(0,0,0,.3);
+  z-index: 1;
+}
+.cell.start .idx, .cell.goal .idx { background: var(--barn); }
+
 .cell .tokens {
   position: absolute;
   inset: 0;
@@ -120,10 +184,11 @@ body {
   align-content: center;
   justify-content: center;
   gap: 2px;
-  padding: 12px 2px 2px;
+  padding: 14px 2px 2px;
+  z-index: 2;
 }
 .token {
-  width: 26px; height: 26px;
+  width: 28px; height: 28px;
   border-radius: 50%;
   border: 2px solid #fff;
   background-size: cover;
@@ -133,94 +198,104 @@ body {
 
 /* サイド */
 .side-panel { display: flex; flex-direction: column; gap: 16px; }
-.card { background: var(--panel); border-radius: 16px; padding: 16px 18px; }
-.card h2 { margin: 0 0 12px; font-size: 18px; }
+.card {
+  background: var(--cream);
+  border-radius: 16px;
+  padding: 16px 18px;
+  border: 3px solid var(--field-dark);
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
+}
+.card h2 { margin: 0 0 12px; font-size: 18px; color: var(--field-dark); }
+.card h2::before { content: "🌾 "; }
 
 .ranking { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .ranking li {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--panel2);
+  background: #fff;
   border-radius: 10px;
   padding: 8px 12px;
+  border: 2px solid #e6dcc0;
 }
-.ranking .rank-no { font-weight: 800; width: 24px; color: var(--accent); }
+.ranking .rank-no { font-weight: 900; width: 24px; color: var(--wheat-dark); }
 .ranking .avatar {
   width: 34px; height: 34px; border-radius: 50%;
-  background: #333 center/cover; border: 2px solid rgba(255,255,255,.3);
+  background: #ddd center/cover; border: 2px solid var(--field);
 }
-.ranking .tname { flex: 1; font-weight: 700; }
-.ranking .tpts { font-weight: 800; font-size: 18px; }
-.ranking li.current { outline: 2px solid var(--accent); }
-.ranking .offline { opacity: .4; }
+.ranking .tname { flex: 1; font-weight: 800; }
+.ranking .tpts { font-weight: 900; font-size: 18px; color: var(--field-dark); }
+.ranking .tpts::after { content: " 🌱"; font-size: 13px; }
+.ranking li.current { outline: 3px solid var(--wheat); background: var(--cream2); }
+.ranking .offline { opacity: .45; }
 
 /* クイズカード */
-.quiz-question { font-size: 18px; font-weight: 700; line-height: 1.5; }
+.quiz-card h2::before { content: "❓ "; }
+.quiz-question { font-size: 18px; font-weight: 800; line-height: 1.5; }
 .quiz-choices { list-style: none; margin: 8px 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .quiz-choices li {
-  background: var(--panel2);
+  background: #fff;
+  border: 2px solid #e6dcc0;
   border-radius: 10px;
   padding: 10px;
-  font-weight: 600;
+  font-weight: 700;
 }
-.quiz-choices li.correct { background: var(--good); color: #06210b; }
-.timer-wrap { margin: 12px 0; height: 12px; background: var(--panel2); border-radius: 999px; position: relative; }
-.timer-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--good), var(--accent)); width: 100%; transition: width 1s linear; }
-.timer-text { position: absolute; right: 8px; top: -22px; font-weight: 700; }
+.quiz-choices li.correct { background: var(--good); color: #fff; border-color: var(--field-dark); }
+.timer-wrap { margin: 12px 0; height: 14px; background: #e9e0c6; border-radius: 999px; position: relative; overflow: hidden; }
+.timer-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--good), var(--wheat)); width: 100%; transition: width 1s linear; }
+.timer-text { position: absolute; right: 8px; top: -22px; font-weight: 800; }
 .answer-status { display: flex; flex-wrap: wrap; gap: 6px; }
 .answer-status .chip {
   font-size: 12px; padding: 4px 8px; border-radius: 999px;
-  background: var(--panel2); color: var(--muted);
+  background: #fff; color: var(--muted); border: 2px solid #e6dcc0; font-weight: 700;
 }
-.answer-status .chip.done { background: var(--good); color: #06210b; }
+.answer-status .chip.done { background: var(--good); color: #fff; border-color: var(--field-dark); }
 
 /* 結果 */
+.result-card h2::before { content: "🏆 "; }
 .result-card .rrow {
   display: flex; align-items: center; gap: 10px;
-  padding: 8px 10px; border-radius: 10px; background: var(--panel2); margin-bottom: 6px;
+  padding: 8px 10px; border-radius: 10px; background: #fff; margin-bottom: 6px; border: 2px solid #e6dcc0;
 }
-.result-card .rrow.correct { border-left: 4px solid var(--good); }
-.result-card .rrow.wrong { border-left: 4px solid var(--bad); }
-.result-card .gained { margin-left: auto; font-weight: 800; color: var(--good); }
+.result-card .rrow.correct { border-left: 5px solid var(--good); }
+.result-card .rrow.wrong { border-left: 5px solid var(--bad); }
+.result-card .gained { margin-left: auto; font-weight: 900; color: var(--good); }
 
 /* クイズ管理 */
 .admin-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.6);
+  position: fixed; inset: 0; background: rgba(45,60,20,.55);
   display: flex; align-items: center; justify-content: center; z-index: 50; padding: 20px;
 }
 .admin-modal {
-  background: var(--panel); border-radius: 16px; padding: 24px;
-  width: min(720px, 100%); max-height: 88vh; overflow: auto;
+  background: var(--cream); border-radius: 16px; padding: 24px;
+  width: min(720px, 100%); max-height: 88vh; overflow: auto; border: 4px solid var(--field-dark);
 }
 .admin-head { display: flex; justify-content: space-between; align-items: center; }
+.admin-head h2 { color: var(--field-dark); }
 .quiz-form { display: flex; flex-direction: column; gap: 12px; margin: 16px 0; }
-.quiz-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.quiz-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 700; }
 .quiz-form textarea, .quiz-form input, .quiz-form select {
-  background: var(--panel2); border: 1px solid rgba(255,255,255,.12); border-radius: 8px;
-  color: var(--text); padding: 8px 10px; font-size: 14px; font-family: inherit;
+  background: #fff; border: 2px solid #d9cfae; border-radius: 8px;
+  color: var(--ink); padding: 8px 10px; font-size: 14px; font-family: inherit;
 }
 .choices-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 .form-row { display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap; }
 .form-row .btn { margin-left: auto; }
-.form-msg { font-size: 13px; min-height: 18px; }
+.form-msg { font-size: 13px; min-height: 18px; font-weight: 700; }
 .form-msg.ok { color: var(--good); }
 .form-msg.err { color: var(--bad); }
 .quiz-list { list-style: none; padding: 0; margin: 8px 0 0; display: flex; flex-direction: column; gap: 6px; }
-.quiz-list li { background: var(--panel2); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
-.quiz-list .q-ans { color: var(--good); }
+.quiz-list li { background: #fff; border-radius: 8px; padding: 8px 12px; font-size: 13px; border: 2px solid #e6dcc0; }
+.quiz-list .q-ans { color: var(--good); font-weight: 800; }
 
 /* サイコロ演出 */
 .dice-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,.55);
+  position: fixed; inset: 0; background: rgba(45,60,20,.5);
   display: flex; align-items: center; justify-content: center; z-index: 60;
 }
 .dice-box { text-align: center; }
-.dice-face {
-  font-size: 120px;
-  animation: roll .6s ease;
-}
-.dice-caption { font-size: 28px; font-weight: 800; margin-top: 12px; }
+.dice-face { font-size: 120px; animation: roll .6s ease; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,.4); }
+.dice-caption { font-size: 28px; font-weight: 900; margin-top: 12px; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,.5); }
 @keyframes roll {
   0% { transform: rotate(0) scale(.5); }
   60% { transform: rotate(360deg) scale(1.2); }

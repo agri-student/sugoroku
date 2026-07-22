@@ -1,13 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <circle cx="60" cy="62" r="52" fill="#4ECDC4"/>
-  <circle cx="42" cy="40" r="16" fill="#4ECDC4"/>
-  <circle cx="78" cy="40" r="16" fill="#4ECDC4"/>
-  <circle cx="42" cy="40" r="8" fill="#fff"/>
-  <circle cx="78" cy="40" r="8" fill="#fff"/>
-  <circle cx="42" cy="41" r="4" fill="#333"/>
-  <circle cx="78" cy="41" r="4" fill="#333"/>
-  <path d="M40 72 Q60 90 80 72" stroke="#2b7a72" stroke-width="4" fill="none" stroke-linecap="round"/>
-  <circle cx="48" cy="70" r="4" fill="#ff9db1"/>
-  <circle cx="72" cy="70" r="4" fill="#ff9db1"/>
-  <text x="60" y="114" font-size="12" text-anchor="middle" fill="#fff" font-family="sans-serif">カエル</text>
+  <circle cx="60" cy="60" r="56" fill="#f48fb1"/>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <text x="60" y="74" font-size="58" text-anchor="middle">🐖</text>
+  <text x="60" y="112" font-size="13" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold">ぶた</text>
 </svg>

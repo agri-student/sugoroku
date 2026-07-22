@@ -1,9 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
-  <ellipse cx="56" cy="60" rx="42" ry="28" fill="#4D96FF"/>
-  <path d="M92 60 L112 44 L112 76 Z" fill="#3b78d8"/>
-  <circle cx="40" cy="54" r="6" fill="#fff"/>
-  <circle cx="40" cy="55" r="3" fill="#333"/>
-  <path d="M30 66 Q40 72 50 66" stroke="#2b5bab" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M56 40 Q60 32 66 40" stroke="#2b5bab" stroke-width="3" fill="none"/>
-  <text x="56" y="112" font-size="12" text-anchor="middle" fill="#fff" font-family="sans-serif">サカナ</text>
+  <circle cx="60" cy="60" r="56" fill="#ff8a65"/>
+  <circle cx="60" cy="60" r="56" fill="none" stroke="#ffffff" stroke-width="4"/>
+  <text x="60" y="74" font-size="58" text-anchor="middle">🚜</text>
+  <text x="60" y="112" font-size="13" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold">トラクター</text>
 </svg>

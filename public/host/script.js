@@ -6,6 +6,9 @@ const TEAM_COLORS = {
   team4: '#6bcb77', team5: '#a66dd4', team6: '#4d96ff',
 };
 
+// 各マスに表示する作物アイコン（農業テーマ）。順番に繰り返し表示。
+const CROP_ICONS = ['🌾', '🥕', '🌽', '🍅', '🥔', '🍆', '🌻', '🥬', '🫑', '🧅', '🍠', '🥦', '🍓', '🐄', '🐔'];
+
 let state = null;      // 最新の game_state
 let characters = [];   // 利用可能キャラ一覧
 let timerInterval = null;
@@ -107,7 +110,8 @@ function renderBoard() {
     const type = i === 0 ? 'start' : i === size ? 'goal' : 'quiz';
     cell.className = `cell ${type}`;
     const label = i === 0 ? 'START' : i === size ? 'GOAL' : i;
-    cell.innerHTML = `<span class="idx">${label}</span>`;
+    const crop = i === 0 ? '🏡' : i === size ? '🏆' : CROP_ICONS[(i - 1) % CROP_ICONS.length];
+    cell.innerHTML = `<span class="idx">${label}</span><span class="crop">${crop}</span>`;
 
     const tokens = tokensAt[i];
     if (tokens) {
