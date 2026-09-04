@@ -68,6 +68,19 @@ body {
 .avatar {
   width: 48px; height: 48px; border-radius: 50%;
   background: #ddd center/cover; border: 3px solid var(--field);
+  transition: width .3s ease, height .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+/* 自分たちの手番になったらキャラクターを大きく表示（要件 5-2） */
+.avatar.big {
+  width: 96px; height: 96px;
+  border-color: var(--wheat-dark);
+  box-shadow: 0 0 0 5px rgba(246,196,69,.5);
+  animation: avatarPop .45s ease;
+}
+@keyframes avatarPop {
+  0%   { transform: scale(.75); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
 }
 .mename { font-weight: 900; font-size: 18px; }
 .mepts { color: var(--wheat-dark); font-weight: 800; }
@@ -117,6 +130,54 @@ body {
 /* 結果 */
 .result h2 { text-align: center; margin: 0 0 12px; color: var(--field-dark); }
 .result .big-emoji { font-size: 64px; text-align: center; }
+
+/* ------------------------------------------------------------------
+   クイズ登録フォーム（生徒）
+------------------------------------------------------------------ */
+.submit-panel { padding: 0; overflow: hidden; }
+.submit-toggle {
+  width: 100%; border: none; background: var(--cream2); cursor: pointer;
+  font-family: inherit; font-size: 17px; font-weight: 800; color: var(--field-dark);
+  padding: 16px; display: flex; justify-content: center; align-items: center; gap: 8px;
+}
+.submit-toggle .chev { font-size: 13px; }
+.submit-body { padding: 16px; border-top: 3px dashed var(--field); }
+
+.submit-hint {
+  font-size: 13px; font-weight: 800; margin: 0 0 12px;
+  padding: 8px 10px; border-radius: 8px; text-align: center;
+}
+.submit-hint.pending { background: #fff2cf; color: #8a5a00; }
+.submit-hint.direct  { background: #e0ecd2; color: var(--field-dark); }
+
+#studentQuizForm label {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 13px; color: var(--muted); font-weight: 800; margin-bottom: 10px;
+}
+#studentQuizForm textarea,
+#studentQuizForm input,
+#studentQuizForm select {
+  background: #fff; border: 2px solid #d9cfae; border-radius: 10px;
+  color: var(--ink); padding: 12px; font-size: 16px; font-family: inherit;
+}
+.s-choices { display: grid; gap: 0; }
+.s-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.submit-msg { text-align: center; font-weight: 800; font-size: 14px; min-height: 20px; margin: 10px 0 0; }
+.submit-msg.ok { color: var(--good); }
+.submit-msg.ng { color: var(--bad); }
+
+.my-quizzes { list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-direction: column; gap: 6px; }
+.my-quizzes .mq {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border: 2px solid #e6dcc0; border-radius: 8px;
+  padding: 8px 10px; font-size: 13px;
+}
+.my-quizzes .mq-q { flex: 1; font-weight: 700; }
+.my-quizzes .mq-status { font-size: 11px; font-weight: 900; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.my-quizzes .mq.pending  .mq-status { background: #fff2cf; color: #8a5a00; }
+.my-quizzes .mq.approved .mq-status { background: var(--good); color: #fff; }
+.my-quizzes .mq.rejected .mq-status { background: #eee; color: #888; }
 
 .err-msg { color: var(--bad); text-align: center; min-height: 20px; margin-top: 12px; font-weight: 700; }
 [hidden] { display: none !important; }

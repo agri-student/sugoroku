@@ -1,0 +1,76 @@
+[
+  {
+    "id": "it1",
+    "question": "コンピュータが情報を扱うときの最小単位はどれ？",
+    "choices": ["ビット", "バイト", "ヘルツ", "ピクセル"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "it2",
+    "question": "1バイトは何ビット？",
+    "choices": ["4ビット", "8ビット", "16ビット", "32ビット"],
+    "answerIndex": 1,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "it3",
+    "question": "インターネット上でWebページの場所を示す住所のことを何という？",
+    "choices": ["URL", "CPU", "USB", "PDF"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "it4",
+    "question": "パスワードの扱い方として最も適切なものはどれ？",
+    "choices": [
+      "友達と共有する",
+      "誕生日など推測しやすいものにする",
+      "他人に教えず定期的に変更する",
+      "画面に貼っておく"
+    ],
+    "answerIndex": 2,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "it5",
+    "question": "表計算ソフトで合計を求める関数はどれ？",
+    "choices": ["SUM", "AVERAGE", "COUNT", "MAX"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "it6",
+    "question": "コンピュータウイルスへの対策として正しいものはどれ？",
+    "choices": [
+      "不審なメールの添付ファイルを開く",
+      "ウイルス対策ソフトを最新の状態にする",
+      "OSの更新はしない",
+      "怪しいサイトからソフトを入れる"
+    ],
+    "answerIndex": 1,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "it7",
+    "question": "画像やデータの大きさを表す単位で、1MB（メガバイト）は約何KB？",
+    "choices": ["10KB", "100KB", "1000KB", "10000KB"],
+    "answerIndex": 2,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "it8",
+    "question": "個人情報にあたるものはどれ？",
+    "choices": ["天気予報", "住所や電話番号", "教科書の内容", "今日の日付"],
+    "answerIndex": 1,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  }
+]

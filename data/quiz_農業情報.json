@@ -1,0 +1,66 @@
+[
+  {
+    "id": "ag1",
+    "question": "光合成で植物が主に取り込む気体はどれ？",
+    "choices": ["酸素", "二酸化炭素", "窒素", "水素"],
+    "answerIndex": 1,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "ag2",
+    "question": "農作物の生育に必要な「肥料の三要素」に含まれないものはどれ？",
+    "choices": ["窒素", "リン酸", "カリウム", "炭素"],
+    "answerIndex": 3,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "ag3",
+    "question": "同じ畑で同じ作物を続けて作ると起こりやすい問題を何という？",
+    "choices": ["連作障害", "輪作効果", "促成栽培", "品種改良"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "ag4",
+    "question": "ビニールハウスなどを使い、通常より早い時期に収穫する栽培方法はどれ？",
+    "choices": ["抑制栽培", "促成栽培", "露地栽培", "水耕栽培"],
+    "answerIndex": 1,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "ag5",
+    "question": "農業機械のトラクターが主に行う作業はどれ？",
+    "choices": ["耕うん", "脱穀", "精米", "包装"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "ag6",
+    "question": "土を使わずに養液で栽培する方法を何という？",
+    "choices": ["露地栽培", "水耕栽培", "有機栽培", "混作"],
+    "answerIndex": 1,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "ag7",
+    "question": "農産物にGPSやセンサー、ICTを活用する農業を何という？",
+    "choices": ["スマート農業", "自然農法", "焼畑農業", "移動農業"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "ag8",
+    "question": "食品がいつ・どこで・どのように作られたかをたどれる仕組みを何という？",
+    "choices": ["トレーサビリティ", "マーケティング", "ブランディング", "リサイクル"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  }
+]

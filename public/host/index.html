@@ -14,9 +14,27 @@
       <button id="startBtn" class="btn btn-primary">ゲーム開始</button>
       <button id="nextBtn" class="btn">手番を進める</button>
       <button id="resetBtn" class="btn btn-ghost">リセット</button>
-      <button id="adminToggle" class="btn btn-ghost">クイズ管理</button>
+      <button id="adminToggle" class="btn btn-ghost">クイズ管理<span class="badge" id="pendingBadge" hidden>0</span></button>
     </div>
   </header>
+
+  <!-- ゲーム開始前の授業設定バー -->
+  <section class="setup-bar" id="setupBar">
+    <label class="setup-item">
+      <span class="setup-label">📚 授業ファイル</span>
+      <select id="lessonSelect"></select>
+    </label>
+    <span class="setup-info" id="lessonInfo">-</span>
+
+    <label class="setup-item toggle-item">
+      <span class="setup-label">🧑‍🏫 生徒クイズの教員承認</span>
+      <span class="toggle">
+        <input type="checkbox" id="approvalToggle" checked />
+        <span class="slider"></span>
+      </span>
+      <span class="toggle-text" id="approvalText">必須</span>
+    </label>
+  </section>
 
   <main class="layout">
     <!-- 盤面 -->
@@ -34,6 +52,7 @@
 
       <div class="card quiz-card" id="quizCard" hidden>
         <h2>クイズ出題中</h2>
+        <p class="quiz-meta" id="quizMeta"></p>
         <p class="quiz-question" id="quizQuestion"></p>
         <ul class="quiz-choices" id="quizChoices"></ul>
         <div class="timer-wrap">
@@ -54,38 +73,57 @@
   <div class="admin-overlay" id="adminOverlay" hidden>
     <div class="admin-modal">
       <div class="admin-head">
-        <h2>クイズ管理（当日追加登録）</h2>
+        <h2>クイズ管理</h2>
         <button class="btn btn-ghost" id="adminClose">閉じる</button>
       </div>
-      <form id="quizForm" class="quiz-form">
-        <label>問題文
-          <textarea id="qQuestion" rows="2" required placeholder="例）光合成で植物が取り込む気体は？"></textarea>
-        </label>
-        <div class="choices-grid" id="choicesGrid">
-          <label>選択肢1 <input type="text" data-choice required /></label>
-          <label>選択肢2 <input type="text" data-choice required /></label>
-          <label>選択肢3 <input type="text" data-choice /></label>
-          <label>選択肢4 <input type="text" data-choice /></label>
-        </div>
-        <div class="form-row">
-          <label>正解の選択肢
-            <select id="qAnswer">
-              <option value="0">選択肢1</option>
-              <option value="1">選択肢2</option>
-              <option value="2">選択肢3</option>
-              <option value="3">選択肢4</option>
-            </select>
-          </label>
-          <label>制限時間（秒）
-            <input type="number" id="qTime" min="5" max="60" value="20" />
-          </label>
-          <button type="submit" class="btn btn-primary">追加登録</button>
-        </div>
-        <p class="form-msg" id="formMsg"></p>
-      </form>
 
-      <h3>登録済みクイズ（<span id="quizCount">0</span>問）</h3>
-      <ul class="quiz-list" id="quizList"></ul>
+      <div class="tabs">
+        <button class="tab active" data-tab="pending">承認待ち<span class="badge" id="pendingTabBadge" hidden>0</span></button>
+        <button class="tab" data-tab="add">教員が追加登録</button>
+        <button class="tab" data-tab="list">登録済み一覧</button>
+      </div>
+
+      <!-- 承認待ち -->
+      <section class="tab-body" data-body="pending">
+        <p class="hint" id="pendingHint"></p>
+        <ul class="pending-list" id="pendingList"></ul>
+      </section>
+
+      <!-- 追加登録フォーム -->
+      <section class="tab-body" data-body="add" hidden>
+        <form id="quizForm" class="quiz-form">
+          <label>問題文
+            <textarea id="qQuestion" rows="2" required placeholder="例）肥料の三要素に含まれないものは？"></textarea>
+          </label>
+          <div class="choices-grid" id="choicesGrid">
+            <label>選択肢1 <input type="text" data-choice required /></label>
+            <label>選択肢2 <input type="text" data-choice required /></label>
+            <label>選択肢3 <input type="text" data-choice /></label>
+            <label>選択肢4 <input type="text" data-choice /></label>
+          </div>
+          <div class="form-row">
+            <label>正解の選択肢
+              <select id="qAnswer">
+                <option value="0">選択肢1</option>
+                <option value="1">選択肢2</option>
+                <option value="2">選択肢3</option>
+                <option value="3">選択肢4</option>
+              </select>
+            </label>
+            <label>制限時間（秒）
+              <input type="number" id="qTime" min="5" max="60" value="20" />
+            </label>
+            <button type="submit" class="btn btn-primary">追加登録</button>
+          </div>
+          <p class="form-msg" id="formMsg"></p>
+        </form>
+      </section>
+
+      <!-- 登録済み一覧 -->
+      <section class="tab-body" data-body="list" hidden>
+        <h3>登録済みクイズ（<span id="quizCount">0</span>問）<span class="save-note" id="saveNote"></span></h3>
+        <ul class="quiz-list" id="quizList"></ul>
+      </section>
     </div>
   </div>
 

@@ -1,0 +1,66 @@
+[
+  {
+    "id": "soil1",
+    "question": "土の酸性・アルカリ性の度合いを表す指標はどれ？",
+    "choices": ["pH", "EC", "GPS", "BMI"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "soil2",
+    "question": "酸性に傾いた土を中和するために使われるものはどれ？",
+    "choices": ["石灰", "硫黄", "食塩", "砂"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "soil3",
+    "question": "肥料の三要素のうち、主に葉の成長を助けるものはどれ？",
+    "choices": ["窒素", "リン酸", "カリウム", "カルシウム"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "soil4",
+    "question": "肥料の三要素のうち、主に根の成長を助けるものはどれ？",
+    "choices": ["窒素", "リン酸", "カリウム", "マグネシウム"],
+    "answerIndex": 2,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "soil5",
+    "question": "落ち葉や家畜のふんなどから作る、土を豊かにする有機質の資材はどれ？",
+    "choices": ["堆肥", "化学肥料", "農薬", "除草剤"],
+    "answerIndex": 0,
+    "timeLimitSec": 20,
+    "source": "teacher"
+  },
+  {
+    "id": "soil6",
+    "question": "植え付け前にあらかじめ土に混ぜておく肥料を何という？",
+    "choices": ["元肥（もとごえ）", "追肥（ついひ）", "液肥", "葉面散布"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "soil7",
+    "question": "作物の生育途中で足りない養分を補うために与える肥料を何という？",
+    "choices": ["元肥", "追肥", "堆肥", "石灰"],
+    "answerIndex": 1,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  },
+  {
+    "id": "soil8",
+    "question": "異なる種類の作物を順番に作ることで連作障害を防ぐ方法を何という？",
+    "choices": ["輪作", "連作", "単作", "促成栽培"],
+    "answerIndex": 0,
+    "timeLimitSec": 25,
+    "source": "teacher"
+  }
+]

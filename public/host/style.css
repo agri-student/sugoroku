@@ -188,12 +188,25 @@ body::before {
   z-index: 2;
 }
 .token {
-  width: 28px; height: 28px;
+  width: 26px; height: 26px;
   border-radius: 50%;
   border: 2px solid #fff;
   background-size: cover;
   background-position: center;
   box-shadow: 0 2px 6px rgba(0,0,0,.4);
+  transition: width .25s ease, height .25s ease, box-shadow .25s ease;
+}
+/* 手番の班のキャラクターは大きく強調表示する（要件 5-1） */
+.token.current {
+  width: 46px; height: 46px;
+  border: 3px solid var(--wheat);
+  box-shadow: 0 0 0 3px rgba(246,196,69,.55), 0 4px 10px rgba(0,0,0,.45);
+  z-index: 3;
+  animation: tokenPulse 1.2s ease-in-out infinite;
+}
+@keyframes tokenPulse {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
 }
 
 /* サイド */
@@ -227,6 +240,8 @@ body::before {
 .ranking .tpts { font-weight: 900; font-size: 18px; color: var(--field-dark); }
 .ranking .tpts::after { content: " 🌱"; font-size: 13px; }
 .ranking li.current { outline: 3px solid var(--wheat); background: var(--cream2); }
+/* 手番の班はランキングでもキャラクターを大きく表示 */
+.ranking li.current .avatar { width: 50px; height: 50px; border-width: 3px; border-color: var(--wheat-dark); }
 .ranking .offline { opacity: .45; }
 
 /* クイズカード */
@@ -301,5 +316,92 @@ body::before {
   60% { transform: rotate(360deg) scale(1.2); }
   100% { transform: rotate(360deg) scale(1); }
 }
+
+/* ------------------------------------------------------------------
+   授業設定バー（授業ファイル選択 / 承認モードトグル）
+------------------------------------------------------------------ */
+.setup-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 10px 24px;
+  background: rgba(255, 248, 231, .92);
+  border-bottom: 3px solid var(--field-dark);
+}
+.setup-item { display: flex; align-items: center; gap: 8px; }
+.setup-label { font-weight: 800; font-size: 14px; color: var(--field-dark); }
+.setup-bar select {
+  font-family: inherit; font-size: 14px; font-weight: 700;
+  padding: 7px 10px; border-radius: 10px;
+  border: 2px solid var(--field); background: #fff; color: var(--ink);
+  max-width: 340px;
+}
+.setup-bar select:disabled { opacity: .55; }
+.setup-info { font-size: 13px; font-weight: 800; color: var(--wheat-dark); }
+
+/* トグルスイッチ */
+.toggle-item { margin-left: auto; }
+.toggle { position: relative; display: inline-block; width: 54px; height: 30px; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle .slider {
+  position: absolute; cursor: pointer; inset: 0;
+  background: #bdb49a; border-radius: 999px; transition: background .2s;
+}
+.toggle .slider::before {
+  content: ""; position: absolute;
+  height: 24px; width: 24px; left: 3px; top: 3px;
+  background: #fff; border-radius: 50%; transition: transform .2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.toggle input:checked + .slider { background: var(--field); }
+.toggle input:checked + .slider::before { transform: translateX(24px); }
+.toggle-text { font-weight: 900; font-size: 14px; color: var(--field-dark); min-width: 2.5em; }
+
+/* 承認待ち件数バッジ */
+.badge {
+  display: inline-block; margin-left: 6px;
+  background: var(--barn); color: #fff;
+  font-size: 12px; font-weight: 900;
+  padding: 1px 7px; border-radius: 999px;
+}
+
+/* ------------------------------------------------------------------
+   クイズ管理モーダル: タブ / 承認待ち一覧
+------------------------------------------------------------------ */
+.tabs { display: flex; gap: 6px; margin: 16px 0 12px; border-bottom: 3px solid #e0d6b8; }
+.tab {
+  border: none; background: transparent; cursor: pointer;
+  font-family: inherit; font-size: 14px; font-weight: 800; color: var(--muted);
+  padding: 10px 14px; border-radius: 10px 10px 0 0;
+}
+.tab.active { background: var(--field-dark); color: #fff; }
+.hint { font-size: 13px; color: var(--muted); font-weight: 700; margin: 0 0 10px; }
+
+.pending-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.pending-list .empty { color: var(--muted); font-weight: 700; text-align: center; padding: 20px; }
+.pending-item {
+  background: #fff; border: 2px solid #e6dcc0; border-left: 6px solid var(--wheat-dark);
+  border-radius: 10px; padding: 12px 14px;
+}
+.pending-head { display: flex; justify-content: space-between; font-size: 12px; font-weight: 800; color: var(--muted); }
+.pending-head .who { color: var(--field-dark); }
+.pending-q { font-size: 16px; font-weight: 800; margin: 6px 0; }
+.pending-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-bottom: 10px; }
+.pending-choices .pc { font-size: 13px; padding: 4px 8px; background: #f6f1e0; border-radius: 6px; }
+.pending-choices .pc.ans { background: var(--good); color: #fff; font-weight: 800; }
+.pending-actions { display: flex; gap: 8px; }
+.btn.sm { padding: 7px 14px; font-size: 13px; }
+
+.save-note { font-size: 12px; font-weight: 700; color: var(--muted); margin-left: 8px; }
+.quiz-list .tag {
+  font-size: 11px; font-weight: 800; padding: 2px 7px; border-radius: 999px; margin-left: 4px;
+}
+.quiz-list .tag.teacher { background: #e0ecd2; color: var(--field-dark); }
+.quiz-list .tag.student { background: #ffe6c2; color: #8a5a00; }
+.quiz-list .q-sec { color: var(--muted); }
+.quiz-meta { font-size: 12px; font-weight: 800; color: var(--wheat-dark); margin: 0 0 4px; }
 
 [hidden] { display: none !important; }

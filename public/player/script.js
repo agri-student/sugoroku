@@ -9,6 +9,7 @@ let state = null;
 let currentQuiz = null;   // 出題中クイズ
 let answered = false;
 let qTimerInterval = null;
+let myQuizzes = [];       // 自分の班が登録したクイズ（承認状況つき）
 
 // 端末に班を記憶（リロード復帰用）
 const savedTeam = sessionStorage.getItem('sugoroku_team');
@@ -22,6 +23,7 @@ socket.on('characters', (data) => {
 socket.on('game_state_update', (s) => {
   state = s;
   renderJoinGrid();
+  updateSubmitHint();
   if (myTeamId) updateGame();
 });
 
@@ -33,7 +35,6 @@ socket.on('joined', ({ teamId }) => {
 });
 
 socket.on('error_msg', ({ message }) => {
-  // 班選択中はその場に、ゲーム中は一時表示
   if (!el('screenJoin').hidden) el('joinErr').textContent = message;
   else flashDiceMsg(message);
 });
@@ -47,16 +48,21 @@ socket.on('dice_result', ({ teamId, dice, to }) => {
 socket.on('quiz_start', ({ quiz, eligible, endsAt }) => {
   currentQuiz = quiz;
   answered = false;
-  const canAnswer = eligible.includes(myTeamId);
-  showQuiz(quiz, canAnswer, endsAt);
+  showQuiz(quiz, eligible.includes(myTeamId), endsAt);
 });
 
-socket.on('quiz_result', ({ answerIndex, results }) => {
-  showQuizResult(answerIndex, results);
-});
+socket.on('quiz_result', ({ answerIndex, results }) => showQuizResult(answerIndex, results));
 
-socket.on('game_finished', ({ winners, teams }) => {
-  showFinished(winners, teams);
+socket.on('game_finished', ({ winners, teams }) => showFinished(winners, teams));
+
+// 自分の班が登録したクイズが承認された／却下された
+socket.on('quiz_approved', ({ quiz }) => {
+  markMyQuiz(quiz.id, 'approved');
+  showSubmitMsg(`✅ 「${quiz.question}」が先生に承認されました！`, 'ok');
+});
+socket.on('quiz_rejected', ({ quiz }) => {
+  markMyQuiz(quiz.id, 'rejected');
+  showSubmitMsg(`「${quiz.question}」は今回は使われないことになりました。`, '');
 });
 
 // ================= 班選択 =================
@@ -78,7 +84,6 @@ function renderJoinGrid() {
 
 // 自動復帰
 if (savedTeam) {
-  // stateが来る前でもjoinを試みる
   socket.emit('join_team', { teamId: savedTeam });
 }
 
@@ -112,7 +117,6 @@ function goCharacterScreen() {
   const t = state && state.teams.find((x) => x.id === myTeamId);
   el('charTitle').textContent = `${t ? t.name : ''} のキャラクターをえらぼう`;
   renderCharacterGrid();
-  // 既にキャラ選択済みなら復帰時はゲームへ
   if (t && t.character) {
     selectedCharacter = t.character;
     goGameScreen();
@@ -131,6 +135,7 @@ function goGameScreen() {
   el('screenCharacter').hidden = true;
   el('screenGame').hidden = false;
   updateGame();
+  updateSubmitHint();
 }
 
 function myTeam() {
@@ -150,15 +155,16 @@ function updateGame() {
   const turnInfo = el('turnInfo');
   const ct = state.teams.find((t) => t.id === state.currentTeamId);
 
-  // クイズ中/結果中はサイコロパネルを隠す
   const inQuiz = state.status === 'quiz';
   const inResult = state.status === 'result';
   el('dicePanel').hidden = inQuiz || inResult || state.status === 'finished';
 
-  // サイコロボタンの有効化
   const myTurn = me.isCurrentTurn;
-  const canRoll = myTurn && (state.status === 'waiting');
+  const canRoll = myTurn && state.status === 'waiting';
   el('rollBtn').disabled = !canRoll;
+
+  // 手番の時は自分のキャラクターを大きく表示する（要件 5-2）
+  el('meAvatar').classList.toggle('big', !!myTurn);
 
   if (state.status === 'finished') {
     turnInfo.textContent = '🏁 ゲーム終了';
@@ -174,7 +180,6 @@ function updateGame() {
     turnInfo.classList.remove('my-turn');
   }
 
-  // 手番が変わったらサイコロ結果表示をクリア
   if (state.status === 'waiting') el('diceResult').textContent = '';
 }
 
@@ -194,11 +199,10 @@ function flashDiceMsg(msg) {
 function showQuiz(quiz, canAnswer, endsAt) {
   el('dicePanel').hidden = true;
   el('resultPanel').hidden = true;
-  const panel = el('quizPanel');
-  panel.hidden = false;
+  el('quizPanel').hidden = false;
 
   el('qQuestion').textContent = quiz.question;
-  el('qFeedback').textContent = canAnswer ? '' : '（このラウンドは他班の手番の問題です）';
+  el('qFeedback').textContent = canAnswer ? '' : '（この問題は回答できません）';
   el('qFeedback').className = 'q-feedback';
 
   const wrap = el('qChoices');
@@ -265,7 +269,6 @@ function showQuizResult(answerIndex, results) {
     fb.className = 'q-feedback';
   }
 
-  // 次の手番に向けてしばらく後にクイズパネルを閉じる
   setTimeout(() => {
     el('quizPanel').hidden = true;
     updateGame();
@@ -283,5 +286,96 @@ function showFinished(winners, teams) {
   panel.innerHTML = `
     <div class="big-emoji">${iWon ? '🏆' : '🎉'}</div>
     <h2>${iWon ? 'あなたの班の勝ち！' : 'ゲーム終了'}</h2>
-    <p style="text-align:center">勝者: ${names.join('・')}${names.length > 1 ? '（同点・両者勝利）' : ''}</p>`;
+    <p style="text-align:center">勝者: ${escapeHtml(names.join('・'))}${names.length > 1 ? '（同点・両者勝利）' : ''}</p>`;
+}
+
+// ================= クイズ登録（生徒） =================
+el('submitToggle').onclick = () => {
+  const body = el('submitBody');
+  body.hidden = !body.hidden;
+  el('submitChev').textContent = body.hidden ? '▼' : '▲';
+};
+
+function updateSubmitHint() {
+  const hint = el('submitHint');
+  if (!hint || !state) return;
+  hint.textContent = state.approvalRequired
+    ? '登録した問題は先生の承認後に出題されます。'
+    : '登録した問題はすぐに出題プールに入ります。';
+  hint.className = 'submit-hint' + (state.approvalRequired ? ' pending' : ' direct');
+}
+
+el('studentQuizForm').onsubmit = (e) => {
+  e.preventDefault();
+  const question = el('sQuestion').value.trim();
+  const choices = [...document.querySelectorAll('#sChoices input[data-schoice]')].map((i) => i.value.trim());
+  const answerIndex = Number(el('sAnswer').value);
+  const timeLimitSec = Number(el('sTime').value);
+  socket.emit('submit_quiz_by_student', { teamId: myTeamId, question, choices, answerIndex, timeLimitSec });
+};
+
+socket.on('submit_quiz_result', ({ ok, errors, pending, quiz }) => {
+  if (!ok) {
+    showSubmitMsg((errors || ['登録に失敗しました。']).join(' / '), 'ng');
+    return;
+  }
+  myQuizzes.push({ ...quiz, status: pending ? 'pending' : 'approved' });
+  renderMyQuizzes();
+  showSubmitMsg(
+    pending ? '📮 登録しました。先生の承認待ちです。' : '✅ 登録しました。すぐに出題されます！',
+    'ok'
+  );
+  el('studentQuizForm').reset();
+  el('sTime').value = 20;
+  resetSAnswerOptions();
+});
+
+function showSubmitMsg(text, kind) {
+  const m = el('submitMsg');
+  m.textContent = text;
+  m.className = 'submit-msg' + (kind ? ' ' + kind : '');
+  // 登録パネルが閉じていたら開いて気づけるようにする
+  if (el('submitBody').hidden) {
+    el('submitBody').hidden = false;
+    el('submitChev').textContent = '▲';
+  }
+}
+
+function markMyQuiz(quizId, status) {
+  const q = myQuizzes.find((x) => x.id === quizId);
+  if (q) q.status = status;
+  renderMyQuizzes();
+}
+
+function renderMyQuizzes() {
+  const ul = el('myQuizzes');
+  ul.innerHTML = '';
+  if (myQuizzes.length === 0) return;
+  const label = { pending: '承認待ち', approved: '出題プールに反映', rejected: '見送り' };
+  myQuizzes.forEach((q) => {
+    const li = document.createElement('li');
+    li.className = `mq ${q.status}`;
+    li.innerHTML = `<span class="mq-q">${escapeHtml(q.question)}</span>
+      <span class="mq-status">${label[q.status] || ''}</span>`;
+    ul.appendChild(li);
+  });
+}
+
+function resetSAnswerOptions() {
+  document.querySelectorAll('#sAnswer option').forEach((opt, i) => {
+    opt.textContent = `選択肢${i + 1}`;
+  });
+}
+document.querySelectorAll('#sChoices input[data-schoice]').forEach((inp, idx) => {
+  inp.addEventListener('input', () => {
+    const opts = document.querySelectorAll('#sAnswer option');
+    const val = inp.value.trim();
+    if (opts[idx]) opts[idx].textContent = val ? `選択肢${idx + 1}: ${val}` : `選択肢${idx + 1}`;
+  });
+});
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }

@@ -54,6 +54,43 @@
 
       <!-- 結果/終了 -->
       <div class="panel result" id="resultPanel" hidden></div>
+
+      <!-- クイズ登録（事前・ゲーム中どちらでも） -->
+      <div class="panel submit-panel" id="submitPanel">
+        <button class="submit-toggle" id="submitToggle">
+          ✏️ クイズを登録する <span class="chev" id="submitChev">▼</span>
+        </button>
+        <div class="submit-body" id="submitBody" hidden>
+          <p class="submit-hint" id="submitHint"></p>
+          <form id="studentQuizForm">
+            <label>問題文
+              <textarea id="sQuestion" rows="2" required placeholder="例）肥料の三要素に含まれないものは？"></textarea>
+            </label>
+            <div class="s-choices" id="sChoices">
+              <label>選択肢1 <input type="text" data-schoice required /></label>
+              <label>選択肢2 <input type="text" data-schoice required /></label>
+              <label>選択肢3 <input type="text" data-schoice /></label>
+              <label>選択肢4 <input type="text" data-schoice /></label>
+            </div>
+            <div class="s-row">
+              <label>正解
+                <select id="sAnswer">
+                  <option value="0">選択肢1</option>
+                  <option value="1">選択肢2</option>
+                  <option value="2">選択肢3</option>
+                  <option value="3">選択肢4</option>
+                </select>
+              </label>
+              <label>制限時間（秒）
+                <input type="number" id="sTime" min="5" max="60" value="20" />
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary big">この問題を登録する</button>
+            <p class="submit-msg" id="submitMsg"></p>
+          </form>
+          <ul class="my-quizzes" id="myQuizzes"></ul>
+        </div>
+      </div>
     </section>
   </div>
 
